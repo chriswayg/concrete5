@@ -26,7 +26,7 @@ Run Concrete5, which will be linked to the mariadb (modify public ports as nedde
 				   
 Visit your Concrete5 site at h&#8203;ttps://example.com:8443 for testing
 
-On the setup page set your site name and admin user password and enter the following
+On the setup page, set your site name and admin user password and enter the following
 
 		Database Information:
 		Server:          c5mariadb
