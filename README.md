@@ -7,7 +7,7 @@ Concrete5 was designed for ease of use, for users with a minimum of technical sk
 
 ## Quickstart:
 
-Create a Database (replacing the the_db_user_password with a real password).
+Create a Database (replacing the the_root_password and the_db_user_password with real passwords).
 
 		docker run -d --name c5mariadb \
 				   -e MYSQL_ROOT_PASSWORD=the_root_password \
