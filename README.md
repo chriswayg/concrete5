@@ -34,8 +34,6 @@ On the setup page set your site name and admin user password and enter the follo
 		MySQL Password:  the_db_user_password
 		Database Name:   c5db
 
-See the [Docker Hub](https://hub.docker.com/r/chriswayg/concrete5.7/) entry for this container.
-
 ---
 ###### License:
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
