@@ -34,6 +34,8 @@ On the setup page set your site name and admin user password and enter the follo
 		MySQL Password:  the_db_user_password
 		Database Name:   c5db
 
+The link between the c5mariadb and the Concrete5 container causes the /etc/hosts file in the Concrete5 container to be continually updated with the current IP of the c5mariadb container.
+
 ---
 ###### License:
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
