@@ -10,19 +10,19 @@ Concrete5 was designed for ease of use, for users with a minimum of technical sk
 Create a Database (replacing the the_root_password and the_db_user_password with real passwords).
 
 		docker run -d --name c5mariadb \
-				   -e MYSQL_ROOT_PASSWORD=the_root_password \
-				   -e MYSQL_USER=c5dbadmin \
-				   -e MYSQL_PASSWORD=the_db_user_password \ 
-				   -e MYSQL_DATABASE=c5db \
-				   mariadb
+		-e MYSQL_ROOT_PASSWORD=the_root_password \
+		-e MYSQL_USER=c5dbadmin \
+		-e MYSQL_PASSWORD=the_db_user_password \ 
+		-e MYSQL_DATABASE=c5db \
+		mariadb
 
 Run Concrete5, which will be linked to the mariadb (modify public ports as nedded)
 
 		docker run -d --name=Concrete5 \
-				   --link c5mariadb \
-				   -p 8080:80 \
-				   -p 8443:443 \
-				   chriswayg/concrete5.7
+		--link c5mariadb:c5mariadb \
+		-p 8080:80 \
+		-p 8443:443 \
+		chriswayg/concrete5.7
 				   
 Visit your Concrete5 site at h&#8203;ttps://example.com:8443 for testing
 
