@@ -23,7 +23,7 @@ docker run -d --name c5mariadb \
 --volumes-from C5-DATA \
 -e MYSQL_ROOT_PASSWORD=the_root_password \
 -e MYSQL_USER=c5dbadmin \
--e MYSQL_PASSWORD=the_db_user_password \ 
+-e MYSQL_PASSWORD=the_db_user_password \
 -e MYSQL_DATABASE=c5db \
 mariadb
 ```
