@@ -39,7 +39,7 @@ chriswayg/concrete5.7
 ```				   
 Visit your Concrete5 site at ```https://example.com``` for initial setup.
 
-#### Concrete 5 Initial Setup
+#### Concrete5 Setup
 On the setup page, set your site-name and admin user password and enter the following
 
 		Database Information:
