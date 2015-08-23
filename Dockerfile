@@ -1,12 +1,10 @@
 FROM chriswayg/apache-php
 MAINTAINER Christian Wagner chriswayg@gmail.com
 
-# Concrete5 installed at root of site
-# - changes required permissions incl. for multi-lingual sites
-# - find latest download link at https://www.concrete5.org/get-started
-
+# This image provides Concrete5 at root of site
 ENV CONCRETE5_VERSION 5.7.5.1
 
+# Install pre-requisites for Concrete5
 RUN apt-get -y update && \
       DEBIAN_FRONTEND=noninteractive apt-get -y install \
       php5-curl \
@@ -18,9 +16,13 @@ RUN apt-get -y update && \
 
 WORKDIR /var/www/html
 
+# Install Concrete5
+# - changes required permissions incl. for multi-lingual sites
+# - find latest download link at https://www.concrete5.org/get-started
 # for newer version: change Concrete5 download url & md5
 RUN c5url="https://www.concrete5.org/download_file/-/view/81601/" && \
     c5md5="a412a72358197212532c92803d7a1021" && \
+    
     wget --no-verbose ${c5url} -O concrete5.zip && \
     echo "${c5md5}  concrete5.zip" > concrete5.md5 && \
     md5sum -c concrete5.md5 && \
@@ -39,6 +41,9 @@ RUN c5url="https://www.concrete5.org/download_file/-/view/81601/" && \
     mkdir -v  application/languages/site && \
     chown -Rv root:www-data application/languages/site && \
     chmod -Rv 775 application/languages/site
+
+# Website config, ssl certificates & data 
+VOLUME [ "/etc/apache2/", "/etc/ssl/certs/", "/var/www/html/" ] 
 
 EXPOSE 80
 EXPOSE 443
