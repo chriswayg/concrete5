@@ -42,8 +42,9 @@ RUN c5url="https://www.concrete5.org/download_file/-/view/81601/" && \
     chown -Rv root:www-data application/languages/site && \
     chmod -Rv 775 application/languages/site
 
-# Website config, ssl certificates & data 
-VOLUME [ "/etc/apache2/", "/etc/ssl/certs/", "/var/www/html/" ] 
+# Website user data dirs, ssl certificates & data 
+VOLUME [ "/etc/apache2/", "/etc/ssl/certs/", \
+         "/var/www/html/application", "/var/www/html/packages", "/var/www/html/updates"  ] 
 
 EXPOSE 80
 EXPOSE 443
