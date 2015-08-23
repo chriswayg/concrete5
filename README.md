@@ -37,7 +37,7 @@ docker run -d --name=Concrete5 \
 -p 443:443 \
 chriswayg/concrete5.7
 ```				   
-Visit your Concrete5 site at h&#8203;ttps://example.com:443 for initial setup.
+Visit your Concrete5 site at ```https://example.com``` for initial setup.
 
 #### Concrete 5 Initial Setup
 On the setup page, set your site-name and admin user password and enter the following
