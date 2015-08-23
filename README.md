@@ -47,6 +47,10 @@ On the setup page, set your site-name and admin user password and enter the foll
 		MySQL Username:  c5dbadmin
 		MySQL Password:  the_db_user_password
 		Database Name:   c5db
+#### Data will persist
+The Concrete5 and c5mariadb application containers can be removed (even with ```docker rm -f -v```), upgraded and reinitialized without loosing website or database data, as all website data is stored in the C5-DATA container.
+
+To find out where the data is stored on disk, check with ```docker inspect C5-DATA | grep -A1 Source```
 
 ---
 ###### License:
