@@ -20,6 +20,7 @@ The image does not need to be started or running for sharing its data. It can be
 This initializes one database for use with Concrete5. Remember replacing the the_root_password and the_db_user_password with real passwords.
 ```
 docker run -d --name c5mariadb \
+--restart=always \
 --volumes-from C5-DATA \
 -e MYSQL_ROOT_PASSWORD=the_root_password \
 -e MYSQL_USER=c5dbadmin \
@@ -31,6 +32,7 @@ mariadb
 It  will be linked to the MariaDB: The link between the c5mariadb and the Concrete5 container causes the /etc/hosts file in the Concrete5 container to be continually updated with the current IP of the c5mariadb container.
 ```
 docker run -d --name=Concrete5 \
+--restart=always \
 --volumes-from C5-DATA \
 --link c5mariadb:c5mariadb \
 -p 80:80 \
