@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+# if Concrete5 is not yet installed
+if [ ! -e '/var/www/html/concrete/config/concrete.php' ]; then
+    cd /var/www/html/
+    if [ "$(ls -A /var/www/html)" ]; then
+        echo "[warn] /var/www/html/ is not Empty. It contains:"
+        ls -A
+    fi
+    # this also copies dot-files, if present
+    cp -R /usr/local/src/${c5dir}/. /var/www/html 
+    
+    # change required permissions incl. for multi-lingual sites
+    chown -Rv root:www-data application/files/ 
+    chmod -Rv 775 application/files/ 
+    chown -Rv root:www-data application/config/ 
+    chmod -Rv 775 application/config/ 
+    chown -Rv root:www-data packages/ 
+    chmod -Rv 775 packages/ 
+    chown -Rv root:www-data updates/ 
+    chmod -Rv 775 updates/ 
+    mkdir -v  application/languages/site 
+    chown -Rv root:www-data application/languages/site 
+    chmod -Rv 775 application/languages/site
+fi
+
+exec "$@"
