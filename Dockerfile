@@ -18,19 +18,22 @@ RUN apt-get -y update && \
       wget && \
     apt-get clean && rm -r /var/lib/apt/lists/*
 
-WORKDIR /usr/local/src
-
 # Download Concrete5
-# - changes required permissions incl. for multi-lingual sites
-RUN wget --no-verbose $C5_URL -O concrete5.zip && \
-    echo "$C5_MD5  concrete5.zip" > concrete5.md5 && \
-    md5sum -c concrete5.md5 && \
+RUN cd /usr/local/src && \ 
+    wget --no-verbose $C5_URL -O concrete5.zip && \
+    echo "$C5_MD5  concrete5.zip" | md5sum -c - && \
     c5_dir=$(unzip -qql concrete5.zip | head -n1 | tr -s ' ' | cut -d' ' -f5-) && \
-    unzip -qq concrete5.zip
+    unzip -qq concrete5.zip && \
+    rm -v concrete5.zip && \
+    rm -v /var/www/html/index.html
 
 # Website user data & apache config
 VOLUME [ "/var/www/html", "/etc/apache2" ]
 
 EXPOSE 80 443
+WORKDIR /var/www/html
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint"]
+CMD ["apache2-foreground"]
