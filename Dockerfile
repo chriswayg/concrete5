@@ -8,14 +8,15 @@ ENV CONCRETE5_VERSION 5.7.5.1
 ENV C5_URL https://www.concrete5.org/download_file/-/view/81601/
 ENV C5_MD5 a412a72358197212532c92803d7a1021
 
-# Install pre-requisites for Concrete5
+# Install pre-requisites for Concrete5 & nano for editing conf files
 RUN apt-get -y update && \
       DEBIAN_FRONTEND=noninteractive apt-get -y install \
       php5-curl \
       php5-gd \
       php5-mysql \
       unzip \
-      wget && \
+      wget \
+      nano && \
     apt-get clean && rm -r /var/lib/apt/lists/*
 
 # Copy apache2 conf dir & Download Concrete5
