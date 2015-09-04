@@ -19,7 +19,10 @@ RUN apt-get -y update && \
     apt-get clean && rm -r /var/lib/apt/lists/*
 
 # Copy apache2 conf dir & Download Concrete5
-RUN cp -r /etc/apache2 /usr/local/etc/apache2 && \
+# Perl script to enable ability to activate 'Pretty URLs' and redirection in .htaccess by 'AllowOverride'
+# - it matches a multi-line string and replaces 'None' with 'FileInfo'
+RUN perl -i.bak -0pe 's/<Directory \/var\/www\/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None/<Directory \/var\/www\/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride FileInfo/' /etc/apache2/apache2.conf && \
+    cp -r /etc/apache2 /usr/local/etc/apache2 && \
     cd /usr/local/src && \ 
     wget --no-verbose $C5_URL -O concrete5.zip && \
     echo "$C5_MD5  concrete5.zip" | md5sum -c - && \
