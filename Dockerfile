@@ -2,11 +2,6 @@ FROM chriswayg/apache-php
 MAINTAINER Christian Wagner chriswayg@gmail.com
 
 # This image provides Concrete5.7 at root of site
-# - latest download link at https://www.concrete5.org/get-started
-# - for newer version: change Concrete5 version# & download url & md5
-ENV CONCRETE5_VERSION 5.7.5.2
-ENV C5_URL https://www.concrete5.org/download_file/-/view/82243/
-ENV C5_MD5 61e48a8d4bf281a25420c3d2186a1a3d
 
 # Install pre-requisites for Concrete5 & nano for editing conf files
 RUN apt-get update && \
@@ -19,6 +14,14 @@ RUN apt-get update && \
       patch \
       nano && \
     apt-get clean && rm -r /var/lib/apt/lists/*
+    
+# Find latest download details at https://www.concrete5.org/get-started
+# - for newer version: change Concrete5 version# & download url & md5
+ENV CONCRETE5_VERSION 5.7.5.2
+ENV C5_URL https://www.concrete5.org/download_file/-/view/82243/
+ENV C5_MD5 61e48a8d4bf281a25420c3d2186a1a3d
+# nano and other commands will not work without this
+ENV TERM xterm
 
 # Copy apache2 conf dir & Download Concrete5
 # Perl script to enable ability to activate 'Pretty URLs' and redirection in .htaccess by 'AllowOverride'
