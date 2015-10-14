@@ -10,7 +10,7 @@ ENV C5_MD5 a412a72358197212532c92803d7a1021
 
 # Install pre-requisites for Concrete5
 RUN apt-get -y update && \
-      DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install \
       php5-curl \
       php5-gd \
       php5-mysql \

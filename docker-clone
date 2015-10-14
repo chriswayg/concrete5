@@ -1,0 +1,77 @@
+#!/bin/bash
+set -e -x
+
+# This script will clone a set of containers including all its data
+
+if [ $# -ne 2 ]; then
+    echo "Usage: docker-clone Project-Directory Clone-Suffix"
+    exit 1
+fi
+
+if [ ! -d $1 ]; then
+    echo "Project Directory does not exist"
+    exit 1
+fi
+
+# do not use capital letters or underscores for clone suffix, as docker-compose will modify or remove these
+if [[ ! $2 =~ ^[a-z0-9]+$ ]]; then
+   echo "Please use small letters and numbers as Clone Suffix, like '001clone'"
+   exit 1
+fi
+
+PROJ_ORIG=$1
+PROJ_CLONE="${PROJ_ORIG}$2"
+
+# 1. duplicate the directory containing the docker-compose file
+cp -Rv ${PROJ_ORIG}/ ${PROJ_CLONE}/
+
+# 2. temporarily stop the containers
+cd ${PROJ_ORIG}
+docker-compose stop
+
+# 3. create, run and stop the second set of containers (docker-compose does not have a create command)
+cd ../${PROJ_CLONE}
+docker-compose up -d
+docker-compose stop
+
+# 4. determine the data-volumes to be duplicated
+#   a) examine which containers are designated data containers
+#   b) then use docker inspect to determine the relevant directories
+#   c) store destination directories & process them for backup and clone
+#
+# docker-compose ps | grep DATA
+#     c5eunike2dev_DB-DATA_1    /true                            Exit 0
+#     c5eunike2dev_WEB-DATA_1   /true                            Exit 0
+#
+# docker inspect ${PROJ_ORIG}_WEB-DATA_1 | grep Destination
+#             "Destination": "/var/www/html",
+#             "Destination": "/etc/apache2",
+#
+# docker inspect ${PROJ_ORIG}_DB-DATA_1 | grep Destination
+#             "Destination": "/var/lib/mysql",
+
+# these still need to be determined manually from examining the docker-compose.yml or using the commands in 4.
+DATA_SUF1="_WEB-DATA_1"
+VOL1_1="/etc/apache2"
+VOL1_2="/var/www/html"
+
+DATA_SUF2="_DB-DATA_1"
+VOL2_1="/var/lib/mysql"
+
+echo "* current directory: ${PWD}"
+# 5. Backup Data:
+docker run --rm --volumes-from ${PROJ_ORIG}${DATA_SUF1} -v ${PWD}:/clone debian tar -cpzf /clone/clone${DATA_SUF1}.tar.gz ${VOL1_1} ${VOL1_2}
+docker run --rm --volumes-from ${PROJ_ORIG}${DATA_SUF2} -v ${PWD}:/clone debian tar -cpzf /clone/clone${DATA_SUF2}.tar.gz ${VOL2_1}
+
+# 6. Clone Data:
+# existing files in volumes need to be deleted before restoring, as the installation may have created additional files during initial run,
+# which do not get overwritten during restore, such as the install files for web-apps like Concrete5.7
+docker run --rm --volumes-from ${PROJ_CLONE}${DATA_SUF1} -v ${PWD}:/clone debian bash -c "rm -rf ${VOL1_1}/* ${VOL1_2}/* && tar -xpf /clone/clone${DATA_SUF1}.tar.gz"
+docker run --rm --volumes-from ${PROJ_CLONE}${DATA_SUF2} -v ${PWD}:/clone debian bash -c "rm -rf ${VOL2_1}/* && tar -xpf /clone/clone${DATA_SUF2}.tar.gz"
+
+# 7. Start Cloned Containers:
+docker-compose start
+
+# 8. remove tar archives
+#rm -v clone${DATA_SUF1}.tar.gz
+#rm -v clone${DATA_SUF2}.tar.gz
