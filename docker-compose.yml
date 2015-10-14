@@ -1,0 +1,40 @@
+# main configuration
+
+DB-DATA:
+  image: tianon/true
+  volumes:
+    - /var/lib/mysql
+
+db:
+  image: mariadb
+  restart: always
+  volumes_from:
+  - DB-DATA
+  environment:
+  - MYSQL_ROOT_PASSWORD=the_db_root_password
+  - MYSQL_USER=c5dbadmin
+  - MYSQL_PASSWORD=the_db_user_password
+  - MYSQL_DATABASE=c5db
+  log_opt: 
+    max-size: "256k"
+    max-file: "10"
+
+WEB-DATA:
+  image: tianon/true
+  volumes:
+    - /etc/apache2
+    - /var/www/html
+
+web:
+  image: chriswayg/concrete5.7
+  restart: always
+  ports:
+  - "80:80"
+  - "443:443"
+  links:
+  - db
+  volumes_from:
+  - WEB-DATA
+  log_opt:
+    max-size: "512k"
+    max-file: "50"
