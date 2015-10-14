@@ -35,4 +35,5 @@ if [ ! -e '/var/www/html/concrete/config/concrete.php' ]; then
     echo "[info] copied Concrete5.7 and set permissions"
 fi
 
+# else default to run whatever the user wanted like "bash"
 exec "$@"
