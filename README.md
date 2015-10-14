@@ -11,7 +11,7 @@ Concrete5 was designed for ease of use, for users with a minimum of technical sk
 #### Create a minimal Data Container 
 MariaDB will use the initially empty /var/lib/mysql directory and Concrete5 will use /var/www/html and /etc/apache2, which will be populated by the docker-entrypoint script. 
 ```
-docker create -it --name C5-DATA \
+docker create -it --name c5_DATA_1 \
 -v /var/lib/mysql \
 -v /var/www/html \
 -v /etc/apache2 \
@@ -22,9 +22,9 @@ The container does not need to be started or running for sharing its data.
 #### Create a Database 
 This initializes one database for use with Concrete5. Remember replacing the the_root_password and the_db_user_password with real passwords.
 ```
-docker run -d --name db \
+docker run -d --name c5_db_1 \
 --restart=always \
---volumes-from C5-DATA \
+--volumes-from c5_DATA_1 \
 -e MYSQL_ROOT_PASSWORD=the_db_root_password \
 -e MYSQL_USER=c5dbadmin \
 -e MYSQL_PASSWORD=the_db_user_password \
@@ -32,11 +32,11 @@ docker run -d --name db \
 mariadb
 ```
 #### Run Concrete5
-It  will be linked to the MariaDB: The link between the c5mariadb and the Concrete5 container causes the /etc/hosts file in the Concrete5 container to be continually updated with the current IP of the c5mariadb container.
+It  will be linked to the MariaDB: The link between the c5_db and the c5_web container causes the /etc/hosts file in the Concrete5 container to be continually updated with the current IP of the c5_db container.
 ```
-docker run -d --name=Concrete5 \
+docker run -d --name=c5_web_1 \
 --restart=always \
---volumes-from C5-DATA \
+--volumes-from c5_DATA_1 \
 --link db:db \
 -p 80:80 \
 -p 443:443 \
@@ -97,9 +97,9 @@ On the setup page, set your site-name and admin user password and enter the foll
 		Database Name:   c5db
 
 #### Data will persist
-The Concrete5 and MariaDB application containers can be removed (even with ```docker rm -f -v```), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA containers. Just do not delete the DATA containers.
+The Concrete5 and MariaDB application containers can be removed (even with ```docker rm -f -v```), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA containers. (Just do not delete the DATA containers;)
 
-To find out where the data is stored on disk, check with ```docker inspect C5-DATA | grep -A1 Source```
+To find out where the data is stored on disk, check with ```docker inspect c5_DATA_1dat | grep -A1 Source```
 
 ## Common Tasks
 
