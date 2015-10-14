@@ -97,9 +97,9 @@ On the setup page, set your site-name and admin user password and enter the foll
 		Database Name:   c5db
 
 #### Data will persist
-The Concrete5 and MariaDB application containers can be removed (even with ```docker rm -f -v```), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA containers. (Just do not delete the DATA containers;)
+The Concrete5 and MariaDB application containers can be removed (even with `docker rm -f -v`), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA containers. (Just do not delete the DATA containers;)
 
-To find out where the data is stored on disk, check with ```docker inspect c5_DATA_1dat | grep -A1 Source```
+To find out where the data is stored on disk, check with `docker inspect c5_DATA_1 | grep -A1 Source`
 
 ## Common Tasks
 
@@ -115,7 +115,7 @@ In Concrete5.7, clear the cache and reload the page.
 
 #### Backup Containers with Data
 
-Take a look at the `docker-clone` script: It will clone a set of containers including all its data. It is heavily commented, so try it out and see, if it meets your needs. Some more info regarding it, [here on stackoverflow.](http://stackoverflow.com/questions/32794919/script-to-clone-snapshot-docker-containers-including-their-data) 
+Take a look at the `docker-clone` script: It will clone a set of containers including all its data. There is more info regarding it [here on stackoverflow.](http://stackoverflow.com/questions/32794919/script-to-clone-snapshot-docker-containers-including-their-data) The `docker-clone` script still needs to be complemented to be more generally useful beyond this project. It is heavily commented, so try it out and see, if it meets your needs. I would welcome any suggestions for improvements.
 
 ---
 ###### License:
