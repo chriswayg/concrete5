@@ -44,32 +44,28 @@ chriswayg/concrete5.7
 ```				   
 
 #### Docker-Compose
-Alternatively to the above, using docker-compose create the data volumes, database and Concrete5.7 containers all in one step:
+Alternatively to the above, using docker-compose create the data-volume, database and Concrete5.7 containers all in one step:
 
 ```
 $ cd c5
 $ cat docker-compose.yml
-DB-DATA:
+DATA:
   image: tianon/true
   volumes:
     - /var/lib/mysql
+    - /etc/apache2
+    - /var/www/html
 
 db:
   image: mariadb
   restart: always
   volumes_from:
-  - DB-DATA
+  - DATA
   environment:
   - MYSQL_ROOT_PASSWORD=the_db_root_password
   - MYSQL_USER=c5dbadmin
   - MYSQL_PASSWORD=the_db_user_password
   - MYSQL_DATABASE=c5db
-
-WEB-DATA:
-  image: tianon/true
-  volumes:
-    - /etc/apache2
-    - /var/www/html
 
 web:
   image: chriswayg/concrete5.7
@@ -80,7 +76,7 @@ web:
   links:
   - db
   volumes_from:
-  - WEB-DATA
+  - DATA
   
 $ docker-compose up -d
 ```
@@ -97,7 +93,7 @@ On the setup page, set your site-name and admin user password and enter the foll
 		Database Name:   c5db
 
 #### Data will persist
-The Concrete5 and MariaDB application containers can be removed (even with `docker rm -f -v`), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA containers. (Just do not delete the DATA containers;)
+The Concrete5 and MariaDB *application containers* can be removed (even with `docker rm -f -v`), upgraded and reinitialized without loosing website or database data, as all website data is stored in the DATA container. (Just do not delete the DATA container;)
 
 To find out where the data is stored on disk, check with `docker inspect c5_DATA_1 | grep -A1 Source`
 
@@ -105,7 +101,7 @@ To find out where the data is stored on disk, check with `docker inspect c5_DATA
 
 #### Change a Theme's file
 
-Enter the c5 docker container, locate the relevant css file & make changes - for examle something like...
+Enter the Concrete5.7 docker container, locate the relevant css file & make changes - for examle something like...
 ```
 $ docker exec -it c5_web_1 bash
 $ nano ./packages/theme_mytheme/themes/mytheme/css/style.css
