@@ -35,10 +35,6 @@ RUN perl -i.bak -0pe 's/<Directory \/var\/www\/>\n\tOptions Indexes FollowSymLin
     rm -v concrete5.zip && \
     rm -v /var/www/html/index.html
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/apache2/access.log && \
-    ln -sf /dev/stderr /var/log/apache2/error.log
-
 # Persist website user data, logs & apache config
 VOLUME [ "/var/www/html", "/var/log/apache2", "/etc/apache2" ]
 
