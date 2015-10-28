@@ -44,28 +44,23 @@ chriswayg/concrete5.7
 ```				   
 
 #### Docker-Compose
-Alternatively to the above, using docker-compose create the data-volume, database and Concrete5.7 containers all in one step:
+Alternatively to the above, using docker-compose create the data-volume, database and Concrete5.7 containers all in one step see `docker-compose-datavol.yml`, or if you prefer, use host volumes as shown below.
 
 ```
 $ cd c5
 $ cat docker-compose.yml
-DATA:
-  image: tianon/true
-  volumes:
-    - /var/lib/mysql
-    - /etc/apache2
-    - /var/www/html
 
 db:
   image: mariadb
   restart: always
-  volumes_from:
-  - DATA
   environment:
   - MYSQL_ROOT_PASSWORD=the_db_root_password
   - MYSQL_USER=c5dbadmin
   - MYSQL_PASSWORD=the_db_user_password
   - MYSQL_DATABASE=c5db
+  # host volume
+  volumes:
+    - ./data/var/lib/mysql:/var/lib/mysql
 
 web:
   image: chriswayg/concrete5.7
@@ -75,14 +70,16 @@ web:
   - "443:443"
   links:
   - db
-  volumes_from:
-  - DATA
+  # host volumes 
+  volumes:
+    - ./data/etc/apache2:/etc/apache2
+    - ./data/var/www/html:/var/www/html
   
 $ docker-compose up -d
 ```
 
 #### Concrete5 Setup
-Visit your Concrete5 site at ```https://example.org``` for initial setup.
+Visit your Concrete5 site at `https://example.org` for initial setup.
 
 On the setup page, set your site-name and admin user password and enter the following
 
@@ -109,9 +106,9 @@ $ exit
 ```
 In Concrete5.7, clear the cache and reload the page.
 
-#### Backup Containers with Data
+#### Backup Containers with Data in Volumes
 
-Take a look at the `docker-clone` script: It will clone a set of containers including all its data. There is more info regarding it [here on stackoverflow.](http://stackoverflow.com/questions/32794919/script-to-clone-snapshot-docker-containers-including-their-data) The `docker-clone` script still needs to be complemented to be more generally useful beyond this project. It is heavily commented, so try it out and see, if it meets your needs. I would welcome any suggestions for improvements.
+If you are storing your data in Docker volume containers, take a look at the `docker-clone` script: It will clone a set of containers including all its data. There is more info regarding it [here on stackoverflow.](http://stackoverflow.com/questions/32794919/script-to-clone-snapshot-docker-containers-including-their-data) The `docker-clone` script still needs to be complemented to be more generally useful beyond this project. It is heavily commented, so try it out and see, if it meets your needs. I would welcome any suggestions for improvements.
 
 ---
 ###### License:
