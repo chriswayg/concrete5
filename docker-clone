@@ -4,7 +4,7 @@ set -e -x
 # This script will clone a set of containers including all its data
 
 if [ $# -ne 2 ]; then
-    echo "Usage: docker-clone Project-Directory Clone-Suffix"
+    echo "Usage: docker-clone project-directory clone-suffix"
     exit 1
 fi
 
@@ -72,6 +72,7 @@ docker run --rm --volumes-from ${PROJ_CLONE}${DATA_SUF2} -v ${PWD}:/clone debian
 # 7. Start Cloned Containers:
 docker-compose start
 
-# 8. remove tar archives
-#rm -v clone${DATA_SUF1}.tar.gz
-#rm -v clone${DATA_SUF2}.tar.gz
+# 8. move tar archives to keep as a backup
+mkdir -pv ${PROJ_ORIG}/backup/
+mv -v clone${DATA_SUF1}.tar.gz ${PROJ_ORIG}/backup/
+mv -v clone${DATA_SUF2}.tar.gz ${PROJ_ORIG}/backup/
