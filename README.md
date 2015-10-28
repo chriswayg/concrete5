@@ -44,7 +44,7 @@ chriswayg/concrete5.7
 ```				   
 
 #### Docker-Compose
-Alternatively to the above, using docker-compose create the data-volume, database and Concrete5.7 containers all in one step see `docker-compose-datavol.yml`, or if you prefer, use host volumes as shown below.
+Alternatively to the above, using docker-compose create the data-volume, database and Concrete5.7 containers all in one step, as can be seen in `docker-compose-datavol.yml`. Or if you prefer, use host volumes as shown below:
 
 ```
 $ cd c5
@@ -109,6 +109,12 @@ In Concrete5.7, clear the cache and reload the page.
 #### Backup Containers with Data in Volumes
 
 If you are storing your data in Docker volume containers, take a look at the `docker-clone` script: It will clone a set of containers including all its data. There is more info regarding it [here on stackoverflow.](http://stackoverflow.com/questions/32794919/script-to-clone-snapshot-docker-containers-including-their-data) The `docker-clone` script still needs to be complemented to be more generally useful beyond this project. It is heavily commented, so try it out and see, if it meets your needs. I would welcome any suggestions for improvements.
+
+#### Database management or fix problems with phpMyAdmin
+
+`docker run --rm --link c5_db_1:mysql -p 12345:80 nazarpc/phpmyadmin`
+
+Login as MYSQL_USER with your password in MYSQL_PASSWORD.
 
 ---
 ###### License:
