@@ -1,4 +1,6 @@
 # Concrete5.7 for Docker
+[![](https://badge.imagelayers.io/chriswayg/concrete5.7:latest.svg)](https://imagelayers.io/?images=chriswayg/concrete5.7:latest)
+
 Docker image of Concrete5.7 with Apache2.4 and PHP 5.6 based on the official Debian Jessie image
 
 ![Concrete5](https://www.concrete5.org/themes/version_4/images/logo.png "Concrete5 logo")
