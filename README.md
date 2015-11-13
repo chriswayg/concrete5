@@ -24,7 +24,7 @@ The container does not need to be started or running for sharing its data.
 #### Create a Database 
 This initializes one database for use with Concrete5. Remember replacing the the_root_password and the_db_user_password with real passwords.
 ```
-docker run -d --name c5_db_1 \
+docker run -d --name db \
 --restart=always \
 --volumes-from c5_DATA_1 \
 -e MYSQL_ROOT_PASSWORD=the_db_root_password \
