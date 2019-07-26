@@ -1,7 +1,6 @@
-# Concrete5.7 for Docker
-[![](https://badge.imagelayers.io/chriswayg/concrete5.7:latest.svg)](https://imagelayers.io/?images=chriswayg/concrete5.7:latest)
+# Concrete5 for Docker
 
-Docker image of Concrete5.7 with Apache2.4 and PHP 5.6 based on the official Debian Jessie image
+Docker image of Concrete5 Version 8 with Apache2.4 and PHP 7 based on the official Debian Buster image
 
 ![Concrete5](https://www.concrete5.org/themes/version_4/images/logo.png "Concrete5 logo")
 #### Concrete5 is an easy to use web content management system
@@ -100,13 +99,13 @@ To find out where the data is stored on disk, check with `docker inspect c5_DATA
 
 #### Change a Theme's file
 
-Enter the Concrete5.7 docker container, locate the relevant css file & make changes - for examle something like...
+Enter the Concrete5 docker container, locate the relevant css file & make changes - for examle something like...
 ```
 $ docker exec -it c5_web_1 bash
 $ nano ./packages/theme_mytheme/themes/mytheme/css/style.css
 $ exit
 ```
-In Concrete5.7, clear the cache and reload the page.
+In Concrete5, clear the cache and reload the page.
 
 #### Backup Containers with Data in Volumes
 
