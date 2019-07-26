@@ -6,9 +6,9 @@ MAINTAINER Christian Wagner chriswayg@gmail.com
 # Install pre-requisites for Concrete5 & nano for editing conf files
 RUN apt-get update && \
       DEBIAN_FRONTEND=noninteractive apt-get -y install \
-      php5-curl \
-      php5-gd \
-      php5-mysql \
+      php-curl \
+      php-gd \
+      php-mysql \
       unzip \
       wget \
       patch \
