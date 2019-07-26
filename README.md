@@ -1,6 +1,8 @@
 # Concrete5 for Docker
 
-Docker image of Concrete5 Version 8 with Apache2.4 and PHP 7 based on the official Debian Buster image
+Docker image of Concrete5 on Debian Buster with Apache2.4 and PHP 7
+
+This image has been **updated and tested with version 8.5.1** of Concrete5. (Note, that the name on Docker Hub is concrete5.7, as the repository name cannot be changed.)
 
 ![Concrete5](https://www.concrete5.org/themes/version_4/images/logo.png "Concrete5 logo")
 #### Concrete5 is an easy to use web content management system
