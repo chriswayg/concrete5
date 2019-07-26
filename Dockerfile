@@ -10,6 +10,8 @@ RUN apt-get update && \
       php-gd \
       php-mysql \
       php-mbstring \
+      php-xml \
+      php-zip \
       unzip \
       wget \
       patch \
