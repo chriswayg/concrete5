@@ -32,7 +32,7 @@ if [ ! -e '/var/www/html/concrete/config/concrete.php' ]; then
     mkdir -v  application/languages/site
     chown -Rv root:www-data application/languages/site
     chmod -Rv 775 application/languages/site
-    echo "[info] copied Concrete5.7 and set permissions"
+    echo "[info] copied Concrete5 and set permissions"
 fi
 
 # else default to run whatever the user wanted like "bash"
